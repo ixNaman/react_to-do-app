@@ -1,10 +1,10 @@
 .divclass{
     display: flex;
-    justify-content: center;
-    border: 2px solid red;
+    flex-direction: row;
 }
 .space{
     display: flex;
     flex-direction: row;
 
 }
+

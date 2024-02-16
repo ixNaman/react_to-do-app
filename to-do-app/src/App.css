@@ -1,8 +1,9 @@
-.header{
-  position: absolute;
-  top: 0;
-  width: 100%;
+
+.cards1{
   display: flex;
-  justify-content: start;
-  border: 2px solid red;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
 }
+

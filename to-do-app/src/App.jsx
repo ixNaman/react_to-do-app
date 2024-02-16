@@ -1,64 +1,73 @@
-import { useState , useEffect } from 'react'
+import { useState, useEffect } from "react";
 import React from "react";
 
-import './App.css'
-import Navbar from './components/Navbar'
-import Cards from './components/card'
-import axios from 'axios'
-import Title from 'antd/es/skeleton/Title';
+import "./App.css";
+import Navbar from "./components/Navbar";
+import Cards from "./components/card";
+import axios from "axios";
+import { Skeleton, Space } from "antd";
+import LoadingCards from "./components/LoadingCards";
 
-const baseurl = "https://apis-production-145a.up.railway.app/api/todo"
+const baseurl = "https://apis-production-145a.up.railway.app/api/todo/";
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-const[data , setUserData] =useState([])
-
-
-const fetchData = async ()=>{
-  const res= await axios.get(baseurl ,{
-    headers:{
-      Authorization: 'baf0b04b-f443-447c-8706-c379963fddc5'
-    }
-  })
-  setUserData(res.data);
-  console.log(res.data)
-}
-
-useEffect(()=>{
-  fetchData()
-},[])
-
-
-  function createPost() {
-    axios
-      .post(baseurl, {
-        title: "Hello World!",
-        body: "This is a new post."
+  const fetchTasks = async () => {
+    setLoading(true)
+    await axios
+      .get(baseurl, {
+        headers: {
+          Authorization: "baf0b04b-f443-447c-8706-c379963fddc5",
+        },
       })
-      .then((response) => {
-        setPost(response.data);
-      });
-  }
+      .then((response) => {setTasks(response.data)
+      setLoading(false)})
+      .catch((error) => console.error("Error fetching tasks:", error));
+  };
 
-  function update_todo(){}
-  
+  const onSuccess = () => {
+    fetchTasks(setTasks);
+  };
 
-
+  useEffect(() => {
+    fetchTasks(setTasks);
+  }, []);
 
   return (
     <>
-    <div className="Header">
       <div className="nav">
-        <Navbar/>
+        <Navbar />
       </div>
       <div className="cards1">
-        <Cards/>
+        {loading ? (
+          <Skeleton
+            active
+            style={{
+              height: 20,
+              width: 298,
+              marginLeft: 50,
+            }}
+          ></Skeleton>
+        ) : (
+          <Space direction="horizontal" wrap>
+            {tasks.map((data, index) => (
+              <Cards
+                key={index}
+                id={data.id}
+                title={data.title}
+                para={data.para}
+                onSuccess={onSuccess}
+              ></Cards>
+            ))}
+          </Space>
+        )}
+
+        <LoadingCards onSuccess={onSuccess} />
       </div>
-    </div>
     </>
-  )
+  );
 }
 
-
-
-export default App
+export default App;
