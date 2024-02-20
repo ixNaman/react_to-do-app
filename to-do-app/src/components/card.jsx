@@ -24,9 +24,9 @@ const Cards = (props) => {
         },
       });
   
-      // Update the local state if the request is successful
+    
       setIsEditing(false);
-      props.onSuccess(); // Assuming you have a callback to handle any UI updates after saving
+      props.onSuccess(); 
     } catch (error) {
       console.error('Error updating todo:', error);
     }
@@ -35,7 +35,7 @@ const Cards = (props) => {
 
   const handleCancelClick = () => {
     setIsEditing(false);
-    // Reset edited title and notes to the original values
+    
     setEditedTitle(props.title);
     setEditedNotes(props.para);
   };
