@@ -42,8 +42,7 @@ const Cards = (props) => {
 
   const handleDeleteClick = async () => {
     try {
-      document.getElementById("dlt-btn").style.color = "red";
-      console.log('Deleting todo...');
+    
       await axios.delete(`https://apis-production-145a.up.railway.app/api/todo/${props.id}`, {
         headers: {
           Authorization: 'baf0b04b-f443-447c-8706-c379963fddc5',

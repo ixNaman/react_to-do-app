@@ -1,6 +1,7 @@
 .Navbar{
     display: flex;
     flex-direction: row;
+    
   }
   .image{
     height: 80px;
