@@ -8,23 +8,28 @@ import axios from "axios";
 import { Skeleton, Space } from "antd";
 import LoadingCards from "./components/LoadingCards";
 
-const baseurl = "https://apis-production-145a.up.railway.app/api/todo/";
+const baseurl = import.meta.env.VITE_BASEURL;
+const Header = import.meta.env.VITE_HEADER;
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchTasks = async () => {
-    setLoading(true)
+    setLoading(true);
     await axios
       .get(baseurl, {
         headers: {
-          Authorization: "baf0b04b-f443-447c-8706-c379963fddc5",
+          Authorization: Header,
         },
       })
-      .then((response) => {setTasks(response.data)
-      setLoading(false)})
-      .catch((error) => console.error("Error fetching tasks:", error));
+      .then((response) => {
+        setTasks(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        message.error("Error fetching tasks:", error);
+      });
   };
 
   const onSuccess = () => {
